@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
 import { Player } from '@/data/player';
 import { useState } from 'react';
 import { Scorer } from '@/models';
 import { Checkbox } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { addFavorite, addPlayer } from '@/redux/state';
+import store from '@/redux/store';
 
 export interface HomeInterface {}
 
@@ -11,12 +14,15 @@ const Home: React.FC<HomeInterface> = () => {
 
   const [selectedPlayer, setSelectedPlayer] = useState<Scorer[]>([])
   const pageSize = 5
+  const dispatch = useDispatch()
 
   const findScorer = (scorer: Scorer) => !!selectedPlayer.find(p => p.id === scorer.id)
   const filterScorer = (scorer: Scorer) => selectedPlayer.filter(p => p.id !== scorer.id)
 
   const handleChange = (scorer: Scorer) => {
-    setSelectedPlayer(findScorer(scorer) ? filterScorer(scorer) : [...selectedPlayer, scorer]);
+    const filteredPlayers = findScorer(scorer) ? filterScorer(scorer) : [...selectedPlayer, scorer]
+    dispatch(addFavorite(filteredPlayers))
+    setSelectedPlayer(filteredPlayers);
   }
 
   const columns =[
@@ -64,10 +70,14 @@ const Home: React.FC<HomeInterface> = () => {
       renderCell: (params: GridRenderCellParams)=> <>{params.value}</>
     },
 ]
+  useEffect(( )=> {
+    dispatch(addPlayer(Player))
+  }, [])
+
   return (
     <DataGrid
       getRowId={(row: any) => row.id}
-      rows={Player}
+      rows={store.getState().player}
       columns={columns}
       disableColumnSelector
       disableSelectionOnClick 

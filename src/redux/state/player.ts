@@ -16,3 +16,5 @@ export const scorerSlice = createSlice({
     }
   }
 }) 
+
+export const { addPlayer } = scorerSlice.actions;
