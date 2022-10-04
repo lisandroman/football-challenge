@@ -4,9 +4,10 @@ import { Player } from '@/data/player';
 import { useState } from 'react';
 import { Scorer } from '@/models';
 import { Checkbox } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, addPlayer } from '@/redux/state';
 import store from '@/redux/store';
+import { AppStore } from '../../redux/store';
 
 export interface HomeInterface {}
 
@@ -15,6 +16,7 @@ const Home: React.FC<HomeInterface> = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<Scorer[]>([])
   const pageSize = 5
   const dispatch = useDispatch()
+  const statePlayer = useSelector((store: AppStore) => store.player)
 
   const findScorer = (scorer: Scorer) => !!selectedPlayer.find(p => p.id === scorer.id)
   const filterScorer = (scorer: Scorer) => selectedPlayer.filter(p => p.id !== scorer.id)
@@ -77,7 +79,7 @@ const Home: React.FC<HomeInterface> = () => {
   return (
     <DataGrid
       getRowId={(row: any) => row.id}
-      rows={store.getState().player}
+      rows={statePlayer}
       columns={columns}
       disableColumnSelector
       disableSelectionOnClick 
