@@ -1,15 +1,15 @@
 import { Navbar } from './components'
 import { Home } from './pages'
-import { Layoutcontainer } from './styled-components'
+import { LayoutContainer } from './styled-components'
 
 function App() {
 
   return (
     <>
       <Navbar />
-      <Layoutcontainer>
+      <LayoutContainer>
         <Home />
-      </Layoutcontainer>
+      </LayoutContainer>
     </>
   )
 }

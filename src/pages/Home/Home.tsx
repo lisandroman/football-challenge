@@ -1,13 +1,38 @@
 import React from 'react'
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
 import { Player } from '@/data/player';
+import { useState } from 'react';
+import { Scorer } from '@/models';
+import { Checkbox } from '@mui/material';
 
 export interface HomeInterface {}
 
 const Home: React.FC<HomeInterface> = () => {
+
+  const [selectedPlayer, setSelectedPlayer] = useState<Scorer[]>([])
   const pageSize = 5
 
+  const findScorer = (scorer: Scorer) => !!selectedPlayer.find(p => p.id === scorer.id)
+  const filterScorer = (scorer: Scorer) => selectedPlayer.filter(p => p.id !== scorer.id)
+
+  const handleChange = (scorer: Scorer) => {
+    setSelectedPlayer(findScorer(scorer) ? filterScorer(scorer) : [...selectedPlayer, scorer]);
+  }
+
   const columns =[
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Favs',
+      sortable: false,
+      renderCell: (params: GridRenderCellParams) => <>{
+        <Checkbox
+          size="small"
+          checked={findScorer(params.row)}
+          onChange={() => handleChange(params.row)}
+        />
+      }</>
+    },
     {
       field: 'id',
       headerName: '#',
