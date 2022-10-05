@@ -1,30 +1,40 @@
 import { Scorer } from '@/models';
-import { addFavorite } from '@/redux/state';
+import { removeFavorite } from '@/redux/state';
 import { AppStore } from '@/redux/store';
-import { Checkbox } from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export interface FavoriteTable {}
 
 const FavoriteTable: React.FC<FavoriteTable> = () => {
 
-   const [selectedPlayer, setSelectedPlayer] = useState<Scorer[]>([])
   const pageSize = 5
   const dispatch = useDispatch()
   const stateFavorites = useSelector((store: AppStore) => store.favorites)
 
-  const findScorer = (scorer: Scorer) => !!selectedPlayer.find(p => p.id === scorer.id)
-  const filterScorer = (scorer: Scorer) => selectedPlayer.filter(p => p.id !== scorer.id)
-
-  const handleChange = (scorer: Scorer) => {
-    const filteredPlayers = findScorer(scorer) ? filterScorer(scorer) : [...selectedPlayer, scorer]
-    dispatch(addFavorite(filteredPlayers))
-    setSelectedPlayer(filteredPlayers);
+  const handleClick = (scorer: Scorer) => {
+    dispatch(removeFavorite(scorer));
   }
 
   const columns =[
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Favs',
+      sortable: false,
+      renderCell: (params: GridRenderCellParams) => (
+        <>
+          {
+            <IconButton color="secondary" aria-label="favorites" component="label" onClick={() => handleClick(params.row)}>
+              <Delete />
+            </IconButton>
+          }
+        </>
+      )
+    },
     {
       field: 'id',
       headerName: '#',
