@@ -14,9 +14,10 @@ const PlayerTable: React.FC<PlayerTableInterface> = () => {
   const pageSize = 5
   const dispatch = useDispatch()
   const statePlayer = useSelector((store: AppStore) => store.player)
+  const favoritePeople = useSelector((store: AppStore) => store.favorites);
 
-  const findScorer = (scorer: Scorer) => !!selectedPlayer.find(p => p.id === scorer.id)
-  const filterScorer = (scorer: Scorer) => selectedPlayer.filter(p => p.id !== scorer.id)
+  const findScorer = (scorer: Scorer) => !!favoritePeople.find(p => p.id === scorer.id)
+  const filterScorer = (scorer: Scorer) => favoritePeople.filter(p => p.id !== scorer.id)
 
   const handleChange = (scorer: Scorer) => {
     const filteredPlayers = findScorer(scorer) ? filterScorer(scorer) : [...selectedPlayer, scorer]

@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState: Scorer[] = [];
 
 
-export const scorerSlice = createSlice({
+export const playerSlice = createSlice({
   name: 'player',
   initialState: getLocalStorage(LocalStorageTypes.PLAYER) ? JSON.parse(getLocalStorage(LocalStorageTypes.PLAYER) as string) : initialState,
 
@@ -17,4 +17,4 @@ export const scorerSlice = createSlice({
   }
 }) 
 
-export const { addPlayer } = scorerSlice.actions;
+export const { addPlayer } = playerSlice.actions;
