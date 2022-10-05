@@ -5,15 +5,14 @@ import { createSlice, current } from "@reduxjs/toolkit";
 const initialState: Scorer[] = [];
 
 export const favoritesSlice = createSlice({
-  name: 'favorites',
+   name: 'favorites',
   initialState: getLocalStorage(LocalStorageTypes.FAVORITES)
-    ? JSON.parse(getLocalStorage(LocalStorageTypes.FAVORITES) as string) 
+    ? JSON.parse(getLocalStorage(LocalStorageTypes.FAVORITES) as string)
     : initialState,
-
   reducers: {
     addFavorite: (state, action) => {
-      setLocalStorage(LocalStorageTypes.FAVORITES, action.payload)
-      return action.payload
+      setLocalStorage(LocalStorageTypes.FAVORITES, action.payload);
+      return action.payload;
     },
      removeFavorite: (state, action) => {
       const filteredState = current(state).filter((p: Scorer) => p.id !== action.payload.id);
@@ -24,3 +23,5 @@ export const favoritesSlice = createSlice({
 }) 
 
 export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+
+export default favoritesSlice.reducer;

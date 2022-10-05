@@ -1,6 +1,7 @@
 import { Scorer } from "@/models";
 import { configureStore } from "@reduxjs/toolkit";
-import { favoritesSlice, playerSlice } from "./state";
+import { favoritesSlice } from "./state/favorites";
+import { playerSlice } from "./state/player";
 
 export interface AppStore {
   player: Scorer[]

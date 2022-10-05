@@ -1,3 +1,3 @@
 export * from './localStorage';
-export * from './scorer';
+export * from './player';
 export * from './subjectmanager';

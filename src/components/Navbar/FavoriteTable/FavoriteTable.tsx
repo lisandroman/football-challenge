@@ -1,5 +1,5 @@
 import { Scorer } from '@/models';
-import { removeFavorite } from '@/redux/state';
+import { removeFavorite } from '@/redux/state/favorites';
 import { AppStore } from '@/redux/store';
 import { Delete } from '@mui/icons-material';
 import { IconButton } from '@mui/material';

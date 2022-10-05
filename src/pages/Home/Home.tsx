@@ -1,4 +1,4 @@
-import { Player } from '@/data/player';
+import { Player } from '@/data';
 import { addPlayer } from '@/redux/state';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
